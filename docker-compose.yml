@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+
+  geoserver:
+    extends:
+      file: compose-gs-template.yml
+      service: geoserver
+    links:
+      - postgis
+    ports:
+      - "8801:8080"
+    environment:
+      - GEOSERVER_ADMIN_USER=admin
+      - GEOSERVER_ADMIN_PASSWORD=geoserver
+
+  postgis:
+    extends:
+      file: compose-pg-template.yml
+      service: postgis
+
+    environment:
+      - POSTGRES_PASSWORD=Password#123 # PostgreSQL admin password (database is postgis and user is postgis)
+    ports:
+        - "8802:5432"

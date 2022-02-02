@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
+    <title>OpenLayers piemērs</title>
+  </head>
+  <body>
+    <h2>LATA ikgadējā konference ''Atvērta digitālā transformācija''</h2>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+        const ortoLayer = new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+                url: "https://lvmgeoserver.lvm.lv/geoserver/ows",
+                params: {
+                    LAYERS: "public:Orto_LKS",
+                    FORMAT: "image/vnd.jpeg-png8",
+                    transparent: false
+                },
+                projection: "EPSG:3857",
+                serverType: "geoserver",
+                crossOrigin: "anonymous"
+            }),
+            visible: true,
+            id: "ortokarte"
+        });
+        const wmsLayer = new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+                url: "http://localhost:8801/geoserver/ows?SERVICE=WMS&LAYERS=public%3Alvmroads",
+                params: {
+                    LAYERS: "public:lvmroads",
+                    FORMAT: "image/png8",
+                    transparent: true
+                },
+                projection: "EPSG:3857",
+                serverType: "geoserver",
+                crossOrigin: "anonymous"
+            }),
+            visible: true,
+            id: "lvmroads"
+        });
+
+        var map = new ol.Map({
+            target: 'map',
+            layers: [ortoLayer, wmsLayer],
+            view: new ol.View({
+            center: ol.proj.fromLonLat([ 24.51, 56.86]),
+            zoom: 7
+            })
+      });
+    </script>
+  </body>
+</html>

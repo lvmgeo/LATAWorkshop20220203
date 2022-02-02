@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+
+  postgis:
+    image: postgis/postgis:13-3.2-alpine # see: https://hub.docker.com/r/postgis/postgis for configuration specifics
+    container_name: lata-postgis
+    restart: always
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+        - ./PGDATA:/var/lib/postgresql/data # Change the first one to specify lockal data folder where data will be stored
+    command: -p 5432

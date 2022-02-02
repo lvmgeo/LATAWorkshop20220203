@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  geoserver:
+    image: kartoza/geoserver:2.20.1    # see: https://hub.docker.com/r/kartoza/geoserver/ for configuration specifics
+    container_name: lata-geoserver
+    restart: always
+
+    volumes:
+      - ./GSDATA:/opt/geoserver/data_dir # Change the first one to specify local data folder where data will be stored
